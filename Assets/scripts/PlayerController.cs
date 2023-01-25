@@ -27,13 +27,15 @@ public class PlayerController : MonoBehaviour
     {
         if(hInput == 0)
         {
-            model.transform.Rotate(0, 0, -model.transform.rotation.z * 5.0f);
+            model.transform.Rotate(0, 0, -model.transform.rotation.z * 2.0f);
         }
 
 
-        model.transform.Rotate(0, 0, -hInput * Mathf.Abs(model.transform.rotation.z) - 0.20f);
+        model.transform.Rotate(0, 0, hInput * (Mathf.Abs(model.transform.rotation.z) - 0.20f));
 
-        Debug.Log((model.transform.rotation.z) - 0.2f);
+        Debug.Log("Math: " + (Mathf.Abs(model.transform.rotation.z) - 0.2f));
+        Debug.Log("Z: " + model.transform.rotation.z);
+
 
         Vector3 movement = new Vector3(0, vInput, hInput) * Time.deltaTime * speed * 100;
 
