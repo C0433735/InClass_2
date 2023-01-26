@@ -1,27 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class Paddle : MonoBehaviour
 {
-    [SerializeField] private float speed = 6.0f;
-    float hInput;
+    [SerializeField] private float speed = 15.0f;
+    [SerializeField] string axis = "VerticalP1";
+    private Rigidbody rb;
+    //float hInput;
     float vInput;
-    // Start is called before the first frame update
+    float yLimit = -4;
+
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-        hInput = Input.GetAxis("Horizontal");
-        vInput = Input.GetAxis("Vertical");
+
+        //hInput = Input.GetAxis("Horizontal");
+        vInput = Input.GetAxisRaw(axis);
     }
     private void FixedUpdate()
     {
-        Vector3 movement = new Vector3(0, vInput, hInput) * Time.deltaTime * speed * 100;
-        rb.velocity = movement;
+        if ((!(transform.position.y > Mathf.Abs(yLimit)) && !(vInput < 0)) || (!(transform.position.y < yLimit) && !(vInput > 0)))
+        {
+            Vector3 movement = Vector3.up * vInput * Time.deltaTime * speed;
+            rb.transform.Translate(movement);
+        }
+        
+        
     }
 }
